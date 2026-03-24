@@ -3,7 +3,7 @@
  *
  * jQuery effects used in theme.
  */
-			
+
 // ----------------------------------------------------------------------------------
 //	ADD STICKY TO #HEADER
 // ----------------------------------------------------------------------------------
@@ -128,9 +128,45 @@ jQuery(document).ready(function(){
 });
 
 
-/* ----------------------------------------------------------------------------------
-	RESPONSIVE MENU - TOGGLE SUB MENUS & ACCESSIBILITY
----------------------------------------------------------------------------------- */
+// ----------------------------------------------------------------------------------
+//	RESPONSIVE MENU - TOGGLE DROPDOWN
+// ----------------------------------------------------------------------------------
+
+jQuery(document).ready(function (){
+
+	// Assign selector variables
+	const headernav_btn           = jQuery('#header-nav .btn-navbar');
+	const header_responsive_inner = jQuery('#header-responsive-inner');
+	const header_responsive_links = jQuery('#header-responsive .responsive-links');
+
+	// Open menu
+	headernav_btn.click(function(e){
+		header_responsive_links.toggleClass( 'nav-open' );
+	});
+
+	// Close menu when exiting using keyboard tab
+	header_responsive_inner.on('focusout', function (e) {
+
+		// Get tabbed element
+		const next = e.relatedTarget;
+
+		// Exit if invalid element
+		if( !next ) return;
+
+		// Do not close if tabbing back to toggle
+		if( headernav_btn.is(next) ) return;
+
+		// Close menu if tabbing out to main content area
+		if( ! header_responsive_inner.has(next).length ) {
+			headernav_btn.click();
+		}
+	});
+});
+
+
+// ----------------------------------------------------------------------------------
+//	RESPONSIVE MENU - TOGGLE SUB MENUS
+// ----------------------------------------------------------------------------------
 
 jQuery(document).ready(function (){
 
@@ -378,7 +414,7 @@ jQuery(window).load(function() {
 
 	// Tooltip - Activate Bootstrap
 	jQuery('[data-tip]').each( function() {jQuery(this).tooltip({ placement: jQuery(this).data('tip') }); });
-	
+
 	// Blog Post - Carousel (used for identifying if input variable is an integer
 	function isNumber(n) {
 		return !isNaN(parseFloat(n)) && isFinite(n);
@@ -389,8 +425,8 @@ jQuery(window).load(function() {
 		jQuery( '.sc-carousel' ).each( function(i) {
 
 			// Don't run caroufredsel code if the following classes are present.
-			if ( jQuery( this ).hasClass( 'sc-postitem' ) || 
-				 jQuery( this ).hasClass( 'sc-featured' ) || 
+			if ( jQuery( this ).hasClass( 'sc-postitem' ) ||
+				 jQuery( this ).hasClass( 'sc-featured' ) ||
 				 jQuery( this ).hasClass( 'sc-image' ) ) {
 					return;
 			};
@@ -410,7 +446,7 @@ jQuery(window).load(function() {
 			if ( scroll == 0 || isNaN( scroll ) == true ) scroll = '1';
 			if ( speed == 0 ) speed = '500';
 			if ( effect == 0 ) {
-				effect = '"scroll"'; 
+				effect = '"scroll"';
 			} else {
 				effect = '"' + effect + '"';
 			}
@@ -435,7 +471,7 @@ jQuery(window).load(function() {
 				}
 			}
 
-				// Apply carousel code if needed				
+				// Apply carousel code if needed
 				if ( jQuery( this ).find( '#' + instanceID + '-inner' ).length ) {
 
 					jQuery( this ).find( '#' + instanceID + '-inner' ).carouFredSel({
@@ -456,18 +492,18 @@ jQuery(window).load(function() {
 						circular        : true,
 						infinite        : false,
 						auto 	        : false,
-						prev	: {	
+						prev	: {
 							button	: '#' + instanceID + ' .prev',
 							key		: 'left'
 						},
-						next	: { 
+						next	: {
 							button	: '#' + instanceID + ' .next',
 							key		: 'right'
 						},
 						pagination	: '#' + instanceID + ' .pagination',
 						onCreate: function () {
 							jQuery(window).bind("load resize", function() {
-							
+
 							// Set height to testimonial carousel elements - All
 							parentWidthTestimonial = jQuery( '#' + instanceID + '.carousel-testimonial li').outerHeight();
 							jQuery( '#' + instanceID + '.carousel-testimonial' ).height( 'auto' );
@@ -515,7 +551,7 @@ jQuery(window).load(function() {
 			// Set carousel container height
 			parentHeight = jQuery( '#' + instanceID + ' li').height();
 			jQuery( '#' + instanceID + ' li' ).each(function() {
-				var elementHeight = jQuery(this).height(); 
+				var elementHeight = jQuery(this).height();
 				parentHeight = elementHeight > parentHeight ? elementHeight : parentHeight;
 			});
 
@@ -548,8 +584,8 @@ jQuery(window).load(function() {
 
 			jQuery(this).delay( delay ).queue(function(next){
 				jQuery(this).children().css( 'width', width + '%' );
-			});	
-		}, {	
+			});
+		}, {
 		offset: 'bottom-in-view'
 	});
 
@@ -560,9 +596,9 @@ jQuery(window).load(function() {
 
 			// Collect slider parameter values
 			var wide = jQuery( element ).data( 'wide' );
-			
+
 			// Format row section for full-screen slider
-			if ( wide == 'on' ) {		
+			if ( wide == 'on' ) {
 				jQuery( element ).closest( '.panel-grid' ).css( 'padding', 0 );
 				jQuery( element ).closest( '.panel-grid-core' ).css( 'margin', 0 ).css( 'maxWidth', '100%' );
 				jQuery( element ).closest( '.panel-grid-cell' ).css( 'padding', 0 );
@@ -585,8 +621,8 @@ jQuery('.anim-start-ltr').waypoint(
 		jQuery(this).delay( time ).queue(function(next){
 		    jQuery(this).removeClass( 'anim-start-ltr' ).addClass( 'anim-end-ltr' );
 		    jQuery(this).parent().removeAttr( 'title' );
-		});	
-	}, {	
+		});
+	}, {
 	offset: 'bottom-in-view'
 });
 
@@ -597,7 +633,7 @@ jQuery('.anim-start-rtl').waypoint(
 		jQuery(this).delay( time ).queue(function(next){
 		    jQuery(this).removeClass( 'anim-start-rtl' ).addClass( 'anim-end-rtl' );
 		    jQuery(this).parent().removeAttr( 'title' );
-		});	
+		});
 	}, {
 	offset: 'bottom-in-view'
 });
@@ -609,7 +645,7 @@ jQuery('.anim-start-btt').waypoint(
 		jQuery(this).delay( time ).queue(function(next){
 		    jQuery(this).removeClass( 'anim-start-btt' ).addClass( 'anim-end-btt' );
 		    jQuery(this).parent().removeAttr( 'title' );
-		});	
+		});
 	}, {
 	offset: 'bottom-in-view'
 });
